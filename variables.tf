@@ -29,3 +29,9 @@ variable "schedule" {
   description = "Cron expression (UTC)"
   default     = "0 2 * * *"
 }
+
+variable "retention_count" {
+  type        = number
+  description = "Number of snapshots to keep (oldest are deleted)"
+  default     = 7
+}
