@@ -58,12 +58,13 @@ resource "scaleway_iam_api_key" "snapshot_scheduler" {
 }
 
 resource "scaleway_job_definition" "snapshot" {
-  name         = local.name
-  cpu_limit    = 140
-  memory_limit = 256
-  image_uri    = "python:3-alpine"
-  command      = "python3 -c exec(__import__('base64').b64decode(__import__('os').environ['SNAPSHOT_SCRIPT']).decode())"
-  region       = var.region
+  name                   = local.name
+  cpu_limit              = 140
+  memory_limit           = 256
+  local_storage_capacity = 1024
+  image_uri              = "python:3-alpine"
+  startup_command        = ["python3", "-c", "exec(__import__('base64').b64decode(__import__('os').environ['SNAPSHOT_SCRIPT']).decode())"]
+  region                 = var.region
 
   cron {
     schedule = var.schedule
